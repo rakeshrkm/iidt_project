@@ -57,5 +57,14 @@ class User extends Authenticatable
         return $this->hasOne(StudentRegister::class, 'id','seminar_registration_id');
     }
 
+    public function getCourse(){
+        return $this->hasOne(Course::class, 'id','course_id');
+    }
+
+
+    public function getCollege(){
+        return $this->hasOne(College::class, 'id','college_id');
+    }
+
 
 }

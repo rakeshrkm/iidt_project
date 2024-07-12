@@ -44,39 +44,46 @@ Route::get('/course', [FrondEndCourseController::class, 'index'])->name('courses
 Route::get('/course-detail/{course}', [HomeController::class, 'courseDetails'])->name('courseDetails');
 Route::get('/contact', [ContactUsController::class, 'index'])->name('countactLoadPage');
 Route::post('/contact', [ContactUsController::class, 'save'])->name('savecontactus');
-Route::get('/student-login', [StudentLoginController::class, 'LoginPageLoad'])->name('LoginPageLoad');
-Route::post('/student-login', [StudentLoginController::class, 'authenticateStudent'])->name('authentication');
-Route::get('student/dashboard', [StudentDashboardController::class, 'dashboard'])->name('student.dashboard');
-
-
 Route::get('/student-register', [StudentRegisterController::class, 'studentRegistration'])->name('student.registration');
 Route::post('/student-submit', [StudentRegisterController::class, 'saveRegister'])->name('student.submit');
 Route::get('/verify-email/{email}', [StudentRegisterController::class, 'verifyEmail'])->name('student.verifyemail');
 
-Route::get('/student-logout', [StudentLoginController::class, 'logout'])->name('student.logout');
+Route::get('/student-login', [StudentLoginController::class, 'LoginPageLoad'])->name('LoginPageLoad');
+Route::post('/student-login', [StudentLoginController::class, 'authenticateStudent'])->name('authentication');
 
 
 
 
+// Student middleware
 
 
+Route::group(['middleware' => 'student'], function(){
 
-
-// backend code
-
-Route::group(['prefix' => 'admin'], function(){
-Route::group(['middleware' => 'guest'], function(){
-
-    Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate-user');
-    Route::get('captcha-reload', [CaptchaController::class, 'reloadCaptcha'])->name('reload-captcha');
- 
+    Route::get('student/dashboard', [StudentDashboardController::class, 'dashboard'])->name('student.dashboard');
+    Route::get('/student-logout', [StudentLoginController::class, 'logout'])->name('student.logout');
+    Route::get('/change-password', [StudentLoginController::class, 'changePassword'])->name('student.changepassword');
+    Route::post('/change-password', [StudentLoginController::class, 'saveChangePassword'])->name('student.savechangepassword');
+    Route::get('profile', [StudentLoginController::class, 'profile'])->name('student.profile');
 
 });
 
 
 
 
+// backend code
+
+
+
+
+Route::group(['prefix' => 'admin'], function(){
+
+    Route::group(['middleware' => 'guest'], function(){
+        Route::get('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate-user');
+        Route::get('captcha-reload', [CaptchaController::class, 'reloadCaptcha'])->name('reload-captcha');
+    
+       
+    });
 
 Route::group(['middleware' => 'admin',  'middleware' => 'auth'], function(){
     Route::get('/mark-as-read', [PaymentController::class,'markAsRead'])->name('mark-as-read');
@@ -85,8 +92,7 @@ Route::group(['middleware' => 'admin',  'middleware' => 'auth'], function(){
     
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/create-credentials/{id}', [StudentRegisterController::class, 'createCredentials'])->name('createCredentials');
-    Route::post('/save-credentials', [StudentRegisterController::class, 'saveCredentials'])->name('saveCredentials');
-    
+    Route::post('/save-credentials', [StudentRegisterController::class, 'saveCredentials'])->name('saveCredentials'); 
     
     Route::controller(CourseController::class)->prefix('courses')->group(function () {
         Route::get('/', 'index')->name('courses.index');
@@ -109,8 +115,6 @@ Route::group(['middleware' => 'admin',  'middleware' => 'auth'], function(){
         Route::get('topics-lists', 'TopicsLists')->name('courses.topicslists');
 
     });
-
-
     
     Route::controller(StudentRegisterController::class)->prefix('registers')->group(function () {
         Route::get('/', 'index')->name('registers.index');
@@ -155,8 +159,6 @@ Route::group(['middleware' => 'admin',  'middleware' => 'auth'], function(){
         Route::get('destory/{offer}', 'destroy')->name('offers.destroy');
     });
 
-
-
     //permissions
 
     Route::controller(PermissionController::class)->prefix('permissions')->group(function () {
@@ -170,8 +172,6 @@ Route::group(['middleware' => 'admin',  'middleware' => 'auth'], function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
-
-
 });
 
 

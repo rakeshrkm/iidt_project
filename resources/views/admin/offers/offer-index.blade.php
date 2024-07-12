@@ -86,7 +86,7 @@
                                                 <td>{{ date_format($to_date, 'd-m-Y')  }}</td>
                                                 <td>{{ date_format($value->created_at, 'd-m-Y') }}</td>
                                                 <td>
-                                                    <a href="{{ url('/offers/edit/'.$value->id) }}" title="Update Records"> <i class="nav-icon fas fa-edit"></i> </a> &nbsp;&nbsp;
+                                                    <a href="{{ route('offers.edit', ['offer' => $value->id]) }}" title="Update Records"> <i class="nav-icon fas fa-edit"></i> </a> &nbsp;&nbsp;
                                                     <a href="#" data-toggle="modal" data-target="#myModal_{{$loop->iteration}}" data-bs-toggle="modal" data-bs-target="#myModal_{{$loop->iteration}}" class="text-danger"> <i class="nav-icon fas fa-trash" title="Delete Record"></i></a>
                                                     <!-- Delete modal -->
                                                     <div id="myModal_{{$loop->iteration}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -101,7 +101,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
-                                                                    <a href="{{ url('/offers/destory/'.$value->id) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
+                                                                    <a href="{{ route('offers.destroy', ['offer' => $value->id]) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
                                                                 </div>
                                                             </div>
                                                         </div>

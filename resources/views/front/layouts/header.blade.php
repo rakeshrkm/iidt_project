@@ -98,7 +98,18 @@
                     <!-- Header Cart End -->
                     <!-- Header Login Join Start -->
                     @if(Auth::check() == true)
-                    <a class="login btn join-btn pl-2" href="{{ route('student.logout') }}"> Logout</a>
+                 
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                            <img src="{{ asset('front\assets\images\user.png')}}" height="50">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="{{route('student.profile')}}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{route('student.changepassword')}}">Change Password</a></li>
+                            <li><a class="dropdown-item" href="{{ route('student.logout') }}"> Logout</a></li>
+                        </ul>
+                      </div>
+
                     @else
                     <div class="header-login-join d-none d-lg-block">
                         <a class="login btn join-btn" href="{{ route('LoginPageLoad') }}">Login</a>

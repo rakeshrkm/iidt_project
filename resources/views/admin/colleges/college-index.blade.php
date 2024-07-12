@@ -78,7 +78,8 @@
                                                 <td>{{ $value->mobile }}</td>
                                                 <td>{{ date_format($value->created_at, 'd-m-Y') }}</td>
                                                 <td>
-                                                    <a href="{{ url('/college/edit/'.$value->id) }}"> <i class="nav-icon fas fa-edit" title="Update College"></i> </a>&nbsp;&nbsp;
+
+                                                    <a href="{{ route('college.edit', ['college' => $value->id]) }}"> <i class="nav-icon fas fa-edit" title="Update College"></i> </a>&nbsp;&nbsp;
 
                                                     <a href="#" data-toggle="modal" data-target="#myModal_{{$loop->iteration}}" data-bs-toggle="modal" data-bs-target="#myModal_{{$loop->iteration}}" class="text-danger"> <i class="nav-icon fas fa-trash" title="Delete College"></i></a>
                                                     <!-- Delete modal -->
@@ -93,8 +94,8 @@
                                                                     <p class="mb-0 text-danger">Are you sure you want to delete of  {{ucfirst($value->name)}} records. </p>
                                                                 </div>
                                                                 <div class="modal-footer">
+                                                                    <a href="{{ route('college.destroy', ['college' => $value->id]) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
                                                                     <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
-                                                                    <a href="{{ url('/college/destory/'.$value->id) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
                                                                 </div>
                                                             </div>
                                                         </div>

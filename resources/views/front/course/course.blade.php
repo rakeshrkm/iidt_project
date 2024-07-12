@@ -104,7 +104,7 @@
                                         <span>INR <del class="text-danger">{{ $value->amount}}</del></span><br>
                                         <span>INR {{ round($value->actual_amount)}}</span>
 
-                                        @endif
+                                    @endif
 
                                 </div>
                             </div>

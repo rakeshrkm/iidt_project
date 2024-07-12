@@ -73,7 +73,14 @@
                                 </div>
                                 <div class="cart-btn">
                                     {{-- <a href="#">Add to cart</a> --}}
-                                    <span class="price">INR {{$value->actual_amount}}</span>
+                                   
+                                @if( $value->amount == 0.00 && $value->actual_amount == '')
+                                    <span class="text-danger">Coming soon</span>
+                                    @else
+                                    <span>INR <del class="text-danger">{{ $value->amount}}</del></span><br>
+                                    <span>INR {{ round($value->actual_amount)}}</span>
+
+                                @endif
                                 </div>
                             </div>
                             <!-- Courses Meta End -->

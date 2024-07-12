@@ -435,7 +435,7 @@
                                 <img src="assets/images/single-price-1.jpg" alt="">
                                 <a class="popup-video" href="https://www.youtube-nocookie.com/embed/Ga6RYejo6Hk"><i class="fas fa-play"></i></a>
                             </div> --}}
-                            <span class="price">Free</span>
+                            {{-- <span class="price">Free</span> --}}
                             <ul class="price-box-content">
                                 {{-- <li>
                                     <div class="price-box-icon">

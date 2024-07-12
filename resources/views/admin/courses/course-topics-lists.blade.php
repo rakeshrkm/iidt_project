@@ -66,7 +66,7 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ !empty($value->getCourseName->course_name) ?  $value->getCourseName->course_name : ''}}</td>
-                                                    <td>{{ $value->topics }}</td>
+                                                    <td class="text-wrap">{{ $value->topics }}</td>
                                                     {{-- <td>{{ date_format($value->created_at, 'd-m-Y') }}</td> --}}
                                                 </tr>
                                             @empty

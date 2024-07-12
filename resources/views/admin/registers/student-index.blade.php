@@ -86,12 +86,12 @@
                                                 <td class="text-wrap">{{ isset($value->getCollegeDetail->name) ? $value->getCollegeDetail->name : '' }}</td>
                                                 <td>{{ date_format($value->created_at, 'd-m-Y')  }}</td>
                                                 <td>
-                                                    <a href="{{ url('/registers/edit/'.$value->id) }}" title="Update Student Record"> <i class="nav-icon fas fa-edit"></i> </a> &nbsp;&nbsp;
+                                                    <a href="{{ route('registers.edit', ['studentRegister' => $value->id]) }}" title="Update Student Record"> <i class="nav-icon fas fa-edit"></i> </a> &nbsp;&nbsp;
                                                     
-                                                    <a href="{{ url('/registers/show/'.$value->id) }}" title="View Details"><i class="nav-icon fas fa-eye"></i></a>&nbsp;&nbsp;
+                                                    <a href="{{ route('registers.show', ['studentRegister' => $value->id]) }}" title="View Details"><i class="nav-icon fas fa-eye"></i></a>&nbsp;&nbsp;
                                                     <a href="#" data-toggle="modal" data-target="#myModal_{{$loop->iteration}}" data-bs-toggle="modal" data-bs-target="#myModal_{{$loop->iteration}}" class="text-danger"> <i class="nav-icon fas fa-trash" title="Delete Student"></i></a>
 
-                                                    <a href="{{ url('/registers/create-credentials/'.$value->id) }}" title="Creare Credentials">Create Credentials</a>
+                                                    <a href="{{ route('registers.credentials', ['studentRegister' => $value->id]) }}" title="Creare Credentials">Create Credentials</a>
 
                                                     <!-- Delete modal -->
                                                     <div id="myModal_{{$loop->iteration}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -106,7 +106,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
-                                                                    <a href="{{ url('/registers/destory/'.$value->id) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
+                                                                    <a href="{{ route('registers.destroy', ['studentRegister' => $value->id]) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
                                                                 </div>
                                                             </div>
                                                         </div>

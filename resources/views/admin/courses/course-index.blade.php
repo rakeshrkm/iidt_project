@@ -86,7 +86,7 @@
                                                     <td>{{ $value->course_time }}</td>
                                                     <td>{{ date_format($value->created_at, 'd-m-Y') }}</td>
                                                     <td>
-                                                        <a href="{{ url('/admin/courses/edit/'.$value->id) }}"> <i class="nav-icon fas fa-edit" title="Update Course"></i> </a> &nbsp; &nbsp;
+                                                        <a href="{{ route('courses.edit', ['course' => $value->id]) }}"> <i class="nav-icon fas fa-edit" title="Update Course"></i> </a> &nbsp; &nbsp;
     
                                                         <a href="#" data-toggle="modal" data-target="#myModal_{{$loop->iteration}}" data-bs-toggle="modal" data-bs-target="#myModal_{{$loop->iteration}}" class="text-danger"> <i class="nav-icon fas fa-trash" title="Delete College"></i></a>
                                                         <!-- Delete modal -->
@@ -102,7 +102,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn  btn-secondary" data-dismiss="modal">No</button>
-                                                                        <a href="{{ url('/college/destory/'.$value->id) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
+                                                                        <a href="{{ route('courses.destroy', ['course' => $value->id]) }}"><button type="button" class="btn  btn-primary">Yes</button></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
