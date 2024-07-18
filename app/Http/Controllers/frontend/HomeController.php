@@ -23,7 +23,7 @@ class HomeController extends Controller
         
         $courseId = Crypt::decrypt($id);
 
-        $data = Course::select('id','course_name','actual_amount','short_description','description','course_time')->orderBy('id','desc')->where('id', $courseId)->first();
+        $data = Course::select('id','course_name','actual_amount','amount','short_description','discount_amount_percentage','description','course_time')->orderBy('id','desc')->where('id', $courseId)->first();
         $learningPoints = LearningPoint::select('id','learning_point')->where('course_id', $courseId)->get();
         $CourseTopics = CourseTopic::select('id','topics')->where('course_id', $courseId)->get();
         $allCourses =  Course::select('id','course_name','actual_amount','amount')->get();
@@ -34,5 +34,11 @@ class HomeController extends Controller
             'course_topics' => $CourseTopics,
             'courses' => $allCourses
         ]);
+    }
+
+    public function feesRefundPlicy(){
+
+        return view('front.refund-policy');
+
     }
 }

@@ -160,7 +160,11 @@
                 <li class="active-menu">
                     <a href="#">Home</a>
                     <ul class="sub-menu">
-                        <a href="{{ route('home') }}">Home</a>
+                        @if(Auth::check() == true)
+                            <a href="{{ route('student.dashboard') }}">Dashboard </a> &nbsp;&nbsp;
+                            @else
+                            <a href="{{ route('home') }}">Home</a>
+                            @endif
                         {{-- <li><a href="#">Online Academy</a></li>
                         <li>
                             <a href="#">Online Courses</a>
@@ -201,15 +205,17 @@
                 </li> --}}
                 <li><a href="{{ route('countactLoadPage') }}">Contact</a></li>
 
-                @if(Auth::check())
+                @if(Auth::check() == true)
                 <div class="header-login-join d-none d-lg-block">
-                    <a class="login btn join-btn" href="{{ route('LoginPageLoad') }}">Login</a>
-                    <a class="btn join-btn" href="{{ route('student.registration') }}" target="_blank">Register Now</a>
+                  
+                    <li><a class="dropdown-item" href="{{route('student.profile')}}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{{route('student.changepassword')}}">Change Password</a></li>
+                    <li><a class="dropdown-item" href="{{ route('student.logout') }}"> Logout</a></li>
+
                 </div>
                 @else
-                <a class="login btn join-btn" href="{{ route('student.dashboard') }}">Dashboard </a> &nbsp;&nbsp;
-
-                    <a class="login btn join-btn pl-2" href="{{ route('student.logout') }}"> Logout</a>
+                <li><a href="{{ route('LoginPageLoad') }}">Login</a></li>
+                <li><a href="{{ route('student.registration') }}">Register Now</a></li>
                 @endif
 
             </ul>

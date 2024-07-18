@@ -71,11 +71,12 @@
                                     <p><i class="flaticon-user"></i> 4</p>
                                     {{-- <p><i class="flaticon-star-1"></i> 1</p> --}}
                                 </div>
-                                <div class="cart-btn">
+                                <div class="">
                                     {{-- <a href="#">Add to cart</a> --}}
                                    
                                 @if( $value->amount == 0.00 && $value->actual_amount == '')
-                                    <span class="text-danger">Coming soon</span>
+                                <a class="btn join-btn" href="{{ route('student.registration') }}" target="_blank"><span class="p-2">Register Now</span></a>
+
                                     @else
                                     <span>INR <del class="text-danger">{{ $value->amount}}</del></span><br>
                                     <span>INR {{ round($value->actual_amount)}}</span>

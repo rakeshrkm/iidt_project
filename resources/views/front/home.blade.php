@@ -156,7 +156,9 @@
                             </div>
                             <div class="price">
                                 @if( $value->amount == 0.00 && $value->actual_amount == '')
-                                    <span class="text-danger">Coming soon</span>
+                                    {{-- <span class="text-danger">Coming soon</span> --}}
+                                    <a class="btn join-btn" href="{{ route('student.registration') }}" target="_blank">Register Now</a>
+
                                 @else
                                 <span>INR <del class="text-danger">{{ $value->amount}}</del></span><br>
                                 <span>INR {{ round($value->actual_amount)}}</span>

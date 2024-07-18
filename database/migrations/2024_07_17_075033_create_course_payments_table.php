@@ -17,8 +17,14 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('NO ACTION');
             $table->unsignedBigInteger('course_id')->nullable();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('NO ACTION');
+            $table->string('payment_status');
+            $table->string('payment_gateway_order_id');
+            $table->string('order_id');
             $table->decimal('amount')->nullable();
-            $table->string('amount_screen_shot')->nullable();
+            $table->integer('customer_id')->nullable();
+            $table->string('name')->nullable();
+            $table->bigInteger('mobile');
+            $table->string('email');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
             $table->unsignedBigInteger('updated_by')->nullable();

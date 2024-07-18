@@ -447,28 +447,50 @@
                                 </li> --}}
                                 <li>
                                     <div class="price-box-icon">
-                                        <span class="meta-label"><i class="flaticon-bar-chart-1"></i> Level</span>
+                                        <span class="meta-label"><i class="flaticon-wall-clock"></i> Duration in (Days)</span>
                                     </div>
                                     <div class="price-box-info">
-                                        <span class="value">All Levels</span>
+                                        <span class="value">{{ $data->course_time }}</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="price-box-icon">
-                                        <span class="meta-label"><i class="flaticon-wall-clock"></i> Duration</span>
+                                        {{-- <i class="flaticon-bar-chart-1"></i> --}}
+                                        <span class="meta-label"> Course Amount</span>
                                     </div>
                                     <div class="price-box-info">
-                                        <span class="value">03h 12m 30s </span>
+                                        <span class="value">{{ $data->amount }}</span>
+                                    </div>
+                                </li>
+                               
+
+                                <li>
+                                    <div class="price-box-icon">
+                                        {{-- <i class="flaticon-bar-chart-1"></i> --}}
+                                        <span class="meta-label">Discount Percentage</span>
+                                    </div>
+                                    <div class="price-box-info">
+                                        <span class="value">{{ $data->discount_amount_percentage }}</span>
                                     </div>
                                 </li>
                                 <li>
+                                    <div class="price-box-icon">
+                                        {{-- <i class="flaticon-bar-chart-1"></i> --}}
+                                        <span class="meta-label text-success">Actual Payable Amout</span>
+                                    </div>
+                                    <div class="price-box-info">
+                                        <span class="value text-success">{{ round($data->actual_amount) }}</span>
+                                    </div>
+                                </li>
+                                
+                                {{-- <li>
                                     <div class="price-box-icon">
                                         <span class="meta-label"><i class="flaticon-shopping-cart-1"></i>  Enrolled</span>
                                     </div>
                                     <div class="price-box-info">
                                         <span class="value">59</span>
                                     </div>
-                                </li>
+                                </li> --}}
                                 {{-- <li>
                                     <div class="price-box-icon">
                                         <span class="meta-label"><i class="flaticon-google-docs"></i>  Lectures</span>
@@ -479,8 +501,19 @@
                                 </li> --}}
                             </ul>
                             <div class="price-box-btn">
-                                <form action="#">
-                                    <button class="btn" type="submit">Enroll Now</button>
+                                <form method="post" action="{{ route('payments.store') }}">
+                                    @csrf
+                                    
+                                    <div class="form-group">
+                                        <input type="hidden" name="amount" value="{{round($data->actual_amount)}}" id="amount" />
+                                        <input type="hidden" name="course_id" value="{{$data->id}}" />
+                                    </div>
+
+                                    @if(Auth::check() == true)
+                                         <button class="btn" type="submit" >Pay Now</button>
+                                    @else
+                                        <a href="{{ route('LoginPageLoad') }}"><button class="btn" type="button" >Pay Now</button></a>
+                                    @endif
                                 </form>
                             </div>
                             {{-- <div class="price-box-social">
@@ -534,7 +567,9 @@
                                                 <h4 class="title"><a href="{{ url('course-detail/'. $id) }}">{{ $course_value->course_name }}</a></h4>
                                                 {{-- <span class="price">INR {{$course_value->amount}}</span> --}}
                                                 @if( $course_value->amount == 0.00 && $course_value->actual_amount == '')
-                                                    <span class="text-danger">Coming soon</span>
+                                                    {{-- <span class="text-danger">Coming soon</span> --}}
+                                                    {{-- <a class="btn join-btn" href="{{ route('student.registration') }}" target="_blank">Register Now</a> --}}
+
                                                     @else
                                                     <span>INR <del class="text-danger">{{ $course_value->amount}}</del></span><br>
                                                     <span>INR {{ round($course_value->actual_amount)}}</span>
@@ -561,4 +596,49 @@
 
 </div>
 <!-- Single Course End -->
+@endsection
+
+@section('scripts')
+<script>
+$(document).ready(function(){
+    $('#submit_form').click(function(){
+        alert('ok');  
+ $.ajax({
+            type: 'POST',
+            url: 'https://smartgatewayuat.hdfcbank.com/session',
+            data:{
+            order_id:"133",
+            amount:"10.0",
+            customer_id:"1",
+            customer_email:"rakesh.maurya@prakharsoftwares.com",
+            customer_phone:"9953224031",
+            payment_page_client_id:"hdfcmaster",
+            action:"paymentPage",
+            currency:"INR",
+            return_url:"https://shop.merchant.com",
+            description:"Complete your payment",
+            first_name:"rakesh"
+            } ,
+            headers: {
+                '_token': "{{ csrf_token() }}",
+                'Content-Type': 'application/json',
+                'x-merchantid': 'SG755',
+                'x-customerid': 'hdfcmaster',
+                'Authorization': 'Basic MjM0MzAxOTFCM0I0NjA2QUU3MTQ4QTcyNUZBRTE1Og=='
+            },
+            success: function(response) {
+                console.log(response)
+                // if (data.status == 200) { 
+            }
+         
+          });
+          
+        });
+      
+
+   
+
+    });
+</script>
+    
 @endsection

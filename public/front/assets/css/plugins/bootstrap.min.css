@@ -5692,7 +5692,7 @@ fieldset:disabled .btn {
 }
 
 .list-group-numbered {
-    list-style-type: none;
+    list-style-type: upper-greek;
     counter-reset: section
 }
 

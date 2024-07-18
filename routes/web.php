@@ -40,6 +40,7 @@ use App\Http\Controllers\frontend\StudentDashboardController;
 // front code saveRegister
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/course', [FrondEndCourseController::class, 'index'])->name('courses');
 Route::get('/course-detail/{course}', [HomeController::class, 'courseDetails'])->name('courseDetails');
 Route::get('/contact', [ContactUsController::class, 'index'])->name('countactLoadPage');
@@ -51,6 +52,8 @@ Route::get('/verify-email/{email}', [StudentRegisterController::class, 'verifyEm
 Route::get('/student-login', [StudentLoginController::class, 'LoginPageLoad'])->name('LoginPageLoad');
 Route::post('/student-login', [StudentLoginController::class, 'authenticateStudent'])->name('authentication');
 
+Route::get('fees-refund-policy', [HomeController::class, 'feesRefundPlicy'])->name('refund_policy');
+
 
 
 
@@ -58,13 +61,12 @@ Route::post('/student-login', [StudentLoginController::class, 'authenticateStude
 
 
 Route::group(['middleware' => 'student'], function(){
-
     Route::get('student/dashboard', [StudentDashboardController::class, 'dashboard'])->name('student.dashboard');
     Route::get('/student-logout', [StudentLoginController::class, 'logout'])->name('student.logout');
     Route::get('/change-password', [StudentLoginController::class, 'changePassword'])->name('student.changepassword');
     Route::post('/change-password', [StudentLoginController::class, 'saveChangePassword'])->name('student.savechangepassword');
     Route::get('profile', [StudentLoginController::class, 'profile'])->name('student.profile');
-
+    Route::post('/payment-create',[PaymentController::class,'store'])->name('payments.store');
 });
 
 
@@ -142,7 +144,7 @@ Route::group(['middleware' => 'admin',  'middleware' => 'auth'], function(){
     Route::controller(PaymentController::class)->prefix('payments')->group(function () {
         Route::get('/index','index')->name('payments.index');
         Route::get('/create/{id}','create')->name('payments.create');
-        Route::post('/store','store')->name('payments.store');
+        // Route::post('/store','store')->name('payments.store');
         Route::put('/update-payments','updatePayments')->name('payments.updatePayments');
         Route::get('/verify-payments/{coursePayment}','verifyPayments')->name('payments.verify');
     });

@@ -30,7 +30,8 @@
                         <div class="widget-link">
                             <ul class="link">
                                 <li><a href="#">About Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
+                                {{-- <li><a href="#">Privacy Policy</a></li> --}}
+                                <li><a href="{{ route('refund_policy') }}">Refund Policy</a></li>
                                 <li><a href="#">Terms & Condition</a></li>
                                 <li><a href="#testimonial">Student Testimonial</a></li>
                             </ul>
