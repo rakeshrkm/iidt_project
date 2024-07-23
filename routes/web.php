@@ -39,7 +39,7 @@ use App\Http\Controllers\frontend\StudentDashboardController;
 
 // front code saveRegister
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::any('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/course', [FrondEndCourseController::class, 'index'])->name('courses');
 Route::get('/course-detail/{course}', [HomeController::class, 'courseDetails'])->name('courseDetails');
@@ -48,13 +48,10 @@ Route::post('/contact', [ContactUsController::class, 'save'])->name('savecontact
 Route::get('/student-register', [StudentRegisterController::class, 'studentRegistration'])->name('student.registration');
 Route::post('/student-submit', [StudentRegisterController::class, 'saveRegister'])->name('student.submit');
 Route::get('/verify-email/{email}', [StudentRegisterController::class, 'verifyEmail'])->name('student.verifyemail');
-
 Route::get('/student-login', [StudentLoginController::class, 'LoginPageLoad'])->name('LoginPageLoad');
 Route::post('/student-login', [StudentLoginController::class, 'authenticateStudent'])->name('authentication');
-
 Route::get('fees-refund-policy', [HomeController::class, 'feesRefundPlicy'])->name('refund_policy');
-
-
+Route::get('terms-and-condition', [HomeController::class, 'termCondition'])->name('terms_condition');
 
 
 // Student middleware
@@ -67,6 +64,8 @@ Route::group(['middleware' => 'student'], function(){
     Route::post('/change-password', [StudentLoginController::class, 'saveChangePassword'])->name('student.savechangepassword');
     Route::get('profile', [StudentLoginController::class, 'profile'])->name('student.profile');
     Route::post('/payment-create',[PaymentController::class,'store'])->name('payments.store');
+    Route::post('/payment-status/{_token}',[PaymentController::class,'paymentStatus'])->name('payments.status');
+    Route::get('/payment-pdf/{id}',[PaymentController::class,'generateInvoice'])->name('payments.pdf');
 });
 
 

@@ -11,7 +11,6 @@ class FrondEndCourseController extends Controller
     public function index(){
         $course = Course::select('id','course_name','actual_amount','amount','course_images');
         $course =  $course->paginate(8);
-        // dd($course);
         return view('front.course.course',[
             'data' => $course, 
         ]);

@@ -53,7 +53,7 @@
                             <div class="col-md-6">    
                                 <div class="form-group single-form">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" value="{{ old('name') }}" name="name" id="name" placeholder="Enter name">
+                                    <input type="text" class="form-control" value="{{ old('name') }}" name="name" id="name" placeholder="Enter name" autocomplete="off">
                                     @if($errors->has('name'))
                                     <small id="error" class="form-text text-danger">{{ $errors->first('name') }}</small>
                                     @endif
@@ -62,7 +62,7 @@
                             <div class="col-md-6">
                                 <div class="form-group single-form">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="email" placeholder="Enter email">
+                                    <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="email" placeholder="Enter email" autocomplete="off">
                                     @if($errors->has('email'))
                                     <small id="error" class="form-text text-danger">{{ $errors->first('email') }}</small>
                                     @endif
@@ -72,7 +72,7 @@
                             <div class="col-md-6 ">
                                 <div class="form-group single-form">
                                     <label for="mobile">Mobile</label>
-                                    <input type="mobile" class="form-control" value="{{ old('mobile') }}" name="mobile" id="mobile" placeholder="Enter mobile">
+                                    <input type="mobile" class="form-control" value="{{ old('mobile') }}" name="mobile" id="mobile" placeholder="Enter mobile" autocomplete="off">
                                     @if($errors->has('mobile'))
                                     <small id="error" class="form-text text-danger">{{ $errors->first('mobile') }}</small>
                                     @endif
@@ -81,7 +81,7 @@
                             <div class="col-md-6">
                                 <div class="form-group single-form">
                                     <label for="dob">DOB</label>
-                                    <input type="text" class="form-control" value="{{ old('dob') }}" name="dob" id="my_date_picker" placeholder="Enter dob">
+                                    <input type="date" class="form-control" value="{{ old('dob') }}" name="dob" placeholder="Enter dob" autocomplete="off">
                                     @if($errors->has('dob'))
                                     <small id="error" class="form-text text-danger">{{ $errors->first('dob') }}</small>
                                     @endif
@@ -90,7 +90,7 @@
                             <div class="col-md-6">
                                 <div class="form-group single-form">
                                     <label for="college">Password</label>
-                                    <input type="text" class="form-control" value="" name="password" id="password" placeholder="Enter Password">
+                                    <input type="password" class="form-control" value="" name="password" id="password" placeholder="Enter Password" autocomplete="off">
                                     @if($errors->has('password'))
                                     <small id="error" class="form-text text-danger">{{ $errors->first('password') }}</small>
                                     @endif
@@ -117,7 +117,7 @@
                     <div class="col-md-6">
                         <div class="form-group single-form">
                             <label for="college">Confirm Password</label>
-                            <input type="text" class="form-control" value="" name="password_confirmation" id="password_confirmation" placeholder="Enter Confirm Password">
+                            <input type="password" class="form-control" value="" name="password_confirmation" id="password_confirmation" placeholder="Enter Confirm Password" autocomplete="off">
                             @if($errors->has('password_confirmation'))
                             <small id="error" class="form-text text-danger">{{ $errors->first('password_confirmation') }}</small>
                             @endif
@@ -127,7 +127,7 @@
                     <div class="col-md-6">
                         <div class="form-group single-form">
                             <label>Gender</label>
-                            <select class="form-control" id="gender" name="gender">
+                            <select class="form-control" name="gender">
                                 <option value=" "> -- Select gender -- </option>
                                 @foreach($genders as $key => $value)
                                 <option value="{{ $value}}" {{ old('gender') == $value ? 'selected' : ''}}> {{ $value }}</option>

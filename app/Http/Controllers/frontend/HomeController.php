@@ -37,8 +37,10 @@ class HomeController extends Controller
     }
 
     public function feesRefundPlicy(){
-
         return view('front.refund-policy');
+    }
 
+    public function termCondition(){
+        return view('front.term-condition');
     }
 }

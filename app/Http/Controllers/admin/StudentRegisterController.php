@@ -14,6 +14,7 @@ use App\Http\Requests\StudentRegister as Validator;
 use Mail;
 use Crypt;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 
 
@@ -78,7 +79,7 @@ class StudentRegisterController extends Controller
         // dd($request->dob);
 
         // dd(date_format($request->dob, 'Y-m-d'));
-
+    DB::beginTransaction();
     try {
         $student = new StudentRegister();
         $student->status = 1;
@@ -114,10 +115,10 @@ class StudentRegisterController extends Controller
         Mail::send('send-mail.send-register-mail', $data, function ($message) use ($userEmail) {
             $message->to($userEmail)->subject('Registration successfully');
         });
-       
+        DB::commit();
         return redirect()->route('student.registration')->with('success', 'You have registered Successfully !');
     } catch (\Exception $e) {
-
+        DB::rollback();
         return redirect()->route('student.registration')->with('error', "Student Record not Created ");
     }
 

@@ -1,7 +1,7 @@
 @extends('front.layouts.master', ['title' => 'Contact'])  
 @section('contents')  
  <!-- Page Banner Start -->
- <div class="section page-banner-section" style="background-image: url({{ asset('front/assets/images/bg/banner-img.jpg') }});">
+ <div class="section page-banner-section" style="background-image: url({{ asset('front/assets/images/contact-us.png') }});background-size:cover;">
     <div class="container">
         <!-- Page Banner Wrapper Start -->
         <div class="page-banner-wrapper">
@@ -9,10 +9,10 @@
                 <div class="col-lg-12">
                     <!-- Page Banner Content Start -->
                     <div class="page-banner text-center">
-                        <h2 class="title">Contact</h2>
+                        {{-- <h2 class="title">Contact</h2> --}}
                         <ul class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                            <li class="breadcrumb-item text-white"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item  text-white active" aria-current="page">Contact</li>
                         </ul>
                     </div>
                     <!-- Page Banner Content End -->

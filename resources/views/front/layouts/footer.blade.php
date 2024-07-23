@@ -32,7 +32,7 @@
                                 <li><a href="#">About Us</a></li>
                                 {{-- <li><a href="#">Privacy Policy</a></li> --}}
                                 <li><a href="{{ route('refund_policy') }}">Refund Policy</a></li>
-                                <li><a href="#">Terms & Condition</a></li>
+                                <li><a href="{{ route('terms_condition') }}">Terms & Condition</a></li>
                                 <li><a href="#testimonial">Student Testimonial</a></li>
                             </ul>
                         </div>
@@ -46,10 +46,15 @@
 
                         <div class="widget-link">
                             <ul class="link">
-                                <li><a href="#">Foundation Level Certification Courses</a></li>
-                                <li><a href="#">Advance Level Certification Courses</a></li>
-                                <li><a href="#">Master Level Certification Courses</a></li>
-                                <li><a href="#">Remote Pilot Training Courses</a></li>
+                            @php
+                            $course = \App\Models\Course::select('id','course_name')->limit(5)->get();
+                            @endphp
+                            @foreach($course as $key => $value)
+                            @php
+                                 $id = Crypt::encrypt($value->id);
+                            @endphp
+                            <li><a href="{{ url('course-detail/'. $id) }}">{{ $value->course_name}}</a></li>
+                            @endforeach
                             </ul>
                         </div>
                     </div>

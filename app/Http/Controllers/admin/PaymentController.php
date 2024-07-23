@@ -16,6 +16,8 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\CoursePayment as Validator;
 use File;
 use App\Notifications\PaymentSuccessful;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 
 class PaymentController extends Controller
@@ -46,31 +48,18 @@ class PaymentController extends Controller
 
     public function store(Request $request){
 
+        $returnUrl = '';
+        $csrfToken = csrf_token();
         $authId = Auth::user();
         $id = Auth::user()->id;
-
-
         $amount =  round($request->amount);
-
         $customerId = "IIDT"."-".$authId->id;
-
-        $get_mobile = StudentRegister::where('user_id',$id)->first();
-
-       $mobie = $get_mobile ? $get_mobile->mobile : '0123456789';
-
-        $mobile =  strval($mobie);
-
-        // if($dataUser){
-        //     $mobile =  $dataUser->mobile;
-        // }else{
-        //     return redirect()->back('error', 'Your mobile number is not found in our records');
-        // }
-       
+        $get_mobile = StudentRegister::where('id',Auth::user()->seminar_registration_id)->first();
+        $mobie = $get_mobile ? $get_mobile->mobile : '0123456789';
+        $mobile =  strval($mobie);      
         $orderId = date('Y-m-d')."-".time();
-
-       
-
-        $data = ['order_id' => $orderId,
+        $data = [
+        'order_id' => $orderId,
         'amount' =>  $amount,
         'customer_id' => $customerId,
         'customer_email' => $authId->email,
@@ -78,13 +67,13 @@ class PaymentController extends Controller
         'payment_page_client_id' => 'hdfcmaster',
         'action' => 'paymentPage',
         'currency' => 'INR',
-        'return_url' => 'https://shop.merchant.com',
+        'return_url' => route('payments.status', ['_token' => $csrfToken]),
+        // 'return_url' => 'https://smartgateway.hdfcbank.com/orders/'.$orderId,
         'description' => 'Complete your payment',
-        'first_name' => $authId->name 
+        'first_name' => $authId->name ,
         ];
 
         $data_new = json_encode($data);
-
 
        // dd($data_new);
 
@@ -110,6 +99,7 @@ class PaymentController extends Controller
 
         $response = curl_exec($curl);
         $responseData = json_decode($response);
+        $returnUrl = $responseData->sdk_payload->payload->returnUrl;
         $status = $responseData->status;
 
         if($responseData->status == 'NEW'){
@@ -126,7 +116,7 @@ class PaymentController extends Controller
             $payment->email = $responseData->sdk_payload->payload->customerEmail;
             $payment->status = 'Pending';
             $payment->save();
-            return view('front.payment-response', compact('responseData'));
+            return redirect($responseData->payment_links->web);
         }else{
             $payment = new CoursePayment();
             $payment->user_id = $authId->id;
@@ -142,61 +132,27 @@ class PaymentController extends Controller
             $payment->status = 'Pending';
             $payment->remarks =  $responseData->error_info->fields[0]->reason;
             $payment->save();
-            // echo "<pre>";
-            // print_r($responseData);die;
-
               // print_r($responseData->error_info->fields[0]->reason);die;
-
-
-
             return view('front.payment-response', compact('responseData'));
         }
-       
-
-
-
-
-        // try{
-
-        //     $validator = (new Validator($request))->store();
-        //     if($validator->fails()){
-        //         throw new ValidationException($validator);
-        //     }
-        //     check course purchage or not
-
-        //     $checkpayments = CoursePayment::where('course_id',  $request->course_id)->first();
-        //     $offer_id = Offer::where('coupon_code', $request->coupon_code)->first();
-        //     if($offer_id){
-        //        $offerId =  $offer_id->id;
-        //     }else{
-        //         $offerId =  NULL;
-        //     }
-        //     if($checkpayments){
-        //         return redirect()->back()->with("error", "You have already Purchase this course !");
-        //     }
-
-            
-          
-
-            // $payment = new CoursePayment();
-            // $payment->offer_id = $offerId;
-            // $payment->user_id = auth()->user()->id;
-            // $payment->fill($request->all());
-            // $payment->save();
-
-            // User::find(10)->notify(new PaymentSuccessful($payment->amount));
-
-
-            // return view('students.payments.uploadscreentshots',compact('payment'));
-
-        // }catch(\Exception $e){
-            
-        //     return response()->json([
-        //        'message' => $e
-        //     ]);
-        // }
       
     }
+
+
+public function paymentStatus(Request $request, $id){
+    $payments = CoursePayment::where('order_id',  $request->order_id)->first();
+    if($payments){
+        $payments->payment_status = $request->status == 'CHARGED' ? 'SUCCESS' : $request->status;
+        $payments->save(); 
+        return view('front.payment-response',['payments' => $payments]);
+    }
+}
+
+public function generateInvoice($id){
+    $payments = CoursePayment::where('order_id',  $id)->first();
+    $pdf = PDF::loadView('front.payment-receipt', ['payments' => $payments]);
+    return $pdf->download($payments->name."-".$payments->order_id);
+}
 
 
 

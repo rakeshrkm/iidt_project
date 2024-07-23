@@ -6,12 +6,11 @@
     <title>Payments details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
     <style>
       body {
         text-align: center;
         padding: 40px 0;
-        background: #EBF0F5;
+       
       }
         h1 {
           color: #88B04B;
@@ -47,6 +46,7 @@
         box-shadow: 0 2px 3px #C8D0D8;
         display: inline-block;
         margin: 0 auto;
+        border: 1px solid;
       }
 
       .success{
@@ -66,10 +66,9 @@
       <div class="card">
 
         @if($payments->payment_status == 'SUCCESS')
-          <div class="success">
-              <i class="checkmark">✓</i>
-             
-          </div>
+        {{-- <div class="success" style="border: 1px solid red">
+          <img src="public/assets/images/38991083.jpg">
+        </div> --}}
           <h1>Success</h1> 
           <p>Your payment has been successfully Done.</p>
           <p>Your details is given below :</p>
@@ -112,14 +111,7 @@
           {{-- <p class="text-danger">{{ $responseData->error_code }}</p> --}} --
           <p class="text-danger">Please try with valid data</p>
         @endif
-      
-
-        <a href="{{route('home')}}" class="btn btn-dark mt-2">Go to home</a>
-        <a href="{{route('payments.pdf', ['id' => $payments->order_id])}}" class="btn btn-dark mt-2">Download Receipt</a>
-
-     
-
-       
+        <a href="{{route('home')}}" class="btn btn-dark mt-2">Go to home </a>
       </div>
     </body>
 </html>

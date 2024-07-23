@@ -16,7 +16,7 @@
     </div>
 </div>
 <!-- Single Course Banner Start -->
-<div class="section single-course-banner-section" style="background-image: url({{ asset('front/assets/images/bg/banner-2.jpg') }});">
+<div class="section single-course-banner-section" style="background-image: url({{ asset('front/assets/images/course.png') }});">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -32,8 +32,8 @@
                         </ul> --}}
                         {{-- <span class="rating-count">4.67 <span>(3)</span></span> --}}
                     </div>
-                    <h3 class="title">{{ ucwords($data->course_name) }}</h3>
-                    <p>{{ $data->short_description }}</p>
+                    <h3 class="title text-white">{{ ucwords($data->course_name) }}</h3>
+                    <p class="text-white">{{ $data->short_description }}</p>
                     {{-- <div class="single-course-author-meta">
                         <div class="single-course-author">
                             <div class="author-avatar">
@@ -56,7 +56,6 @@
     </div>
 </div>
 <!-- Single Course Banner End -->
-
 <!-- Single Course Start -->
 <div class="section single-course-section">
     <div class="container">
@@ -97,18 +96,13 @@
                             <div class="accordion" id="accordionExample">
                                 <!-- Single Course Topics Accordion Item Start -->
                                 <div class="accordion-item">
-                                  
                                         @foreach($course_topics as $key => $value)
-
                                             <h2 class="accordion-header" id="headingOne">
                                                 <button class="accordion-button" type="button" aria-expanded="true" aria-controls="collapseOne">
                                                     {!! $value->topics !!} 
                                                 </button>
                                             </h2>
                                         @endforeach
-                                      
-                                  
-
                                     
                                     {{-- <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
@@ -470,7 +464,7 @@
                                         <span class="meta-label">Discount Percentage</span>
                                     </div>
                                     <div class="price-box-info">
-                                        <span class="value">{{ $data->discount_amount_percentage }}</span>
+                                        <span class="value">{{ $data->discount_amount_percentage }} (%)</span>
                                     </div>
                                 </li>
                                 <li>
@@ -479,7 +473,7 @@
                                         <span class="meta-label text-success">Actual Payable Amout</span>
                                     </div>
                                     <div class="price-box-info">
-                                        <span class="value text-success">{{ round($data->actual_amount) }}</span>
+                                        <span class="value text-success">{{ $data->actual_amount }}</span>
                                     </div>
                                 </li>
                                 
@@ -505,12 +499,12 @@
                                     @csrf
                                     
                                     <div class="form-group">
-                                        <input type="hidden" name="amount" value="{{round($data->actual_amount)}}" id="amount" />
+                                        <input type="hidden" name="amount" value="{{$data->actual_amount}}" id="amount" />
                                         <input type="hidden" name="course_id" value="{{$data->id}}" />
                                     </div>
 
                                     @if(Auth::check() == true)
-                                         <button class="btn" type="submit" >Pay Now</button>
+                                         <button class="btn" type="submit" >Enroll Now</button>
                                     @else
                                         <a href="{{ route('LoginPageLoad') }}"><button class="btn" type="button" >Pay Now</button></a>
                                     @endif

@@ -9,7 +9,6 @@ use App\Models\Course;
 class StudentDashboardController extends Controller
 {
     public function dashboard(){
-        
         $course = Course::select('id','course_name','amount','actual_amount','course_images');
         $course =  $course->paginate(8);
         // dd($course);
